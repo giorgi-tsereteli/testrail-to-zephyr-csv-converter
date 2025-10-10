@@ -238,9 +238,9 @@ class CSVTransformer:
         preconditions_data = row.get("Preconditions", "")
         if pd.notna(preconditions_data) and str(preconditions_data).strip():
             preconditions_content = str(preconditions_data).strip()
-            sections.append(f"*Preconditions*\n\n{preconditions_content}\n")
+            sections.append(f"*Preconditions*\n\n{preconditions_content}\n----")
         else:
-            sections.append("*Preconditions*\n\n[No preconditions data]\n")
+            sections.append("*Preconditions*\n\n[No preconditions data]\n----")
         
         # Section 3: Steps - get actual data from Steps column
         steps_data = row.get("Steps", "")
@@ -250,8 +250,13 @@ class CSVTransformer:
         else:
             sections.append("*Steps*\n\n[No steps data]\n----")
         
-        # Section 4: Expected Result
-        sections.append("*Expected Result*\n\n[Expected Result content will go here]")
+        # Section 4: Expected Result - get actual data from Expected Result column
+        expected_result_data = row.get("Expected Result", "")
+        if pd.notna(expected_result_data) and str(expected_result_data).strip():
+            expected_result_content = str(expected_result_data).strip()
+            sections.append(f"*Expected Result*\n\n{expected_result_content}")
+        else:
+            sections.append("*Expected Result*\n\n[No expected result data]")
         
         # Start with ID + clear line break, then join sections with 2 line breaks between them
         return f"{id_str}\n\n" + "\n\n".join(sections)

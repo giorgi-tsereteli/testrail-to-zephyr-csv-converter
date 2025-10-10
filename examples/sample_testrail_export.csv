@@ -1,5 +1,5 @@
 ID,Title,Section,Priority,Type,Preconditions,Steps,Expected Result,Custom field
-1,Login with invalid user,Authentication > Login,High,Functional,"User has valid username and password
+C1111,Account UI: Units testing sample draft TC,Authentication > Login,High,Functional,"User has valid username and password
 Browser is open and application is accessible
 
 Browser is open and application is accessible
@@ -9,14 +9,14 @@ Browser is open and application is accessible","1. Navigate to login page
 4. Click Login button","User is successfully logged in
 Dashboard page is displayed
 Welcome message shows user name",Smoke Test
-2,Login with invalid password,Authentication > Login,Medium,Negative,"User has valid username but invalid password
+C22222,Account UI 2,Authentication > Login,Medium,Negative,"User has valid username but invalid password
 Browser is open and application is accessible","1. Navigate to login page
 2. Enter valid username
 3. Enter invalid password
 4. Click Login button","Login fails with error message
 Error message: ""Invalid credentials""
 User remains on login page",Security Test
-3,Create new customer record,Customer Management > CRUD,High,Functional,"User is logged in with appropriate permissions
+C33333,Account UI3,Customer Management > CRUD,High,Functional,"User is logged in with appropriate permissions
 Customer form is accessible","1. Navigate to Customer section
 2. Click ""Add New Customer"" button
 3. Fill in required fields:
@@ -26,18 +26,13 @@ Customer form is accessible","1. Navigate to Customer section
 4. Click Save button","New customer is created successfully
 Success message displayed
 Customer appears in customer list",CRUD Operation
-4,Edit existing customer,Customer Management > CRUD,Medium,Functional,"At least one customer exists in system
-User has edit permissions","1. Navigate to customer list
-2. Select existing customer
-3. Click Edit button
-4. Modify customer name
-5. Click Update button","Customer information is updated
+C44444,Account UI4,Customer Management > CRUD,low,regression,"User is logged in with appropriate permissions
+Customer form is accessible","1. Navigate to Customer section
+2. Click ""Add New Customer"" button
+3. Fill in required fields:
+   - Name: John Doe
+   - Email: john@example.com
+   - Phone: 555-1234
+4. Click Save button","New customer is created successfully
 Success message displayed
-Updated info reflects in customer list",CRUD Operation
-5,Delete customer with orders,Customer Management > CRUD,High,Edge Case,"Customer exists with associated orders
-User has delete permissions","1. Navigate to customer list
-2. Select customer with orders
-3. Click Delete button
-4. Confirm deletion in popup","System prevents deletion
-Warning message about associated orders
-Customer remains in system",Business Logic
+Customer appears in customer list",CRUD Operation

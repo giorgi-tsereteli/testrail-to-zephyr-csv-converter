@@ -234,8 +234,13 @@ class CSVTransformer:
         else:
             sections.append("*Overview*\n\n[No overview data]\n----")
         
-        # Section 2: Preconditions
-        sections.append("*Preconditions*\n\n[Preconditions content will go here]")
+        # Section 2: Preconditions - get actual data from Preconditions column
+        preconditions_data = row.get("Preconditions", "")
+        if pd.notna(preconditions_data) and str(preconditions_data).strip():
+            preconditions_content = str(preconditions_data).strip()
+            sections.append(f"*Preconditions*\n\n{preconditions_content}\n")
+        else:
+            sections.append("*Preconditions*\n\n[No preconditions data]\n----")
         
         # Section 3: Steps  
         sections.append("*Steps*\n\n[Steps content will go here]")

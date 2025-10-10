@@ -1,4 +1,4 @@
-# TestRail to Jira CSV Converter
+# TestRail to Zephyr CSV Converter
 
 🔄 Convert TestRail exports to Zephyr test format with structured multi-section descriptions.
 
@@ -160,35 +160,6 @@ testrail-zephyr-csv-converter/
 ├── requirements.txt       # Python dependencies
 └── README.md             # This documentation
 ```
-
-## � Troubleshooting
-
-### Common Issues
-
-**Missing columns in TestRail export:**
-- At the time of TestRail export, select ALL available fields and export ONLY sections associated with you, your team and your product
-- Ensure your TestRail export includes: ID, Title, Type, Manual/Automated, Overview, Preconditions, Steps, Expected Result
-- Run `./test.sh` to see what columns the transformer expects
-
-**Encoding issues:**
-- Sometimes TestRail export csv can't recognize bullet point values, created with dash -
-
-**Empty rows in output:**
-- The transformer automatically filters out empty rows from TestRail exports
-- Check the console output for row count statistics: "X rows transformed (filtered from Y total rows)"
-
-**Jira import fails:**
-- Verify the Parent ID exists in your Jira instance
-- Check that Labels values exist in Jira (or leave empty)
-- Ensure Product(s) Affected and Engineering Team matches your Jira project setup
-
-### Getting Help
-
-1. **Test with sample data:** `./test.sh`
-2. **Check transformer output:** Look for row count and error messages
-3. **Verify file contents:** Open the generated CSV to inspect the transformation
-4. **Update static values:** Search for "CHANGE THIS VALUE HERE" in transformer.py
-
 ---
 
 **Ready to migrate your test cases!** 🚀 This tool handles the complex multi-section Description formatting so you can focus on your testing workflow.

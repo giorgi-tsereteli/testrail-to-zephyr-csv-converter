@@ -32,7 +32,9 @@ class CSVTransformer:
         return {
             "column_mappings": {
                 "Summary": "Title",
-                "Description": "ID"
+                "Description": "ID",
+                "Labels_1": "Type",
+                "Labels_2": "Manual/Automated"
             },
             "static_values": {
                 "Issue Type": "Test",
@@ -45,10 +47,8 @@ class CSVTransformer:
                 # ⚠️  EDIT HERE: Change "Team Platinum" to different engineering team as needed
                 # 5th column in the Jira import file
                 "Engineering Team": "Team Platinum",  # <-- CHANGE THIS VALUE HERE
-                # Empty Labels columns for QA engineers to manually fill if needed. Data on label is not exported from TestRail
+                # Labels_3 is empty for QA engineers to manually fill if needed
                 # ⚠️ Added label MUST exist in the Jira instance beforehand. Example: "automation"
-                "Labels_1": "",
-                "Labels_2": "",
                 "Labels_3": ""
             },
             "transformations": {
@@ -72,6 +72,11 @@ class CSVTransformer:
                 except UnicodeDecodeError:
                     df = pd.read_csv(input_file, encoding='cp1252')
             
+            # Filter out empty rows - rows where both ID and Title are NaN/empty
+            original_count = len(df)
+            df = df.dropna(subset=['ID', 'Title'], how='all')
+            filtered_count = len(df)
+            
             if show_columns:
                 self._show_available_columns(df)
             
@@ -80,12 +85,14 @@ class CSVTransformer:
             if preview:
                 self._show_preview(transformed_df)
             else:
-                transformed_df.to_csv(output_file, index=False)
+                # Custom CSV writing to handle duplicate column names
+                self._write_csv_with_duplicate_columns(transformed_df, output_file)
                 print(f"✅ Transformation complete: {output_file}")
             
             return {
                 "success": True,
-                "original_rows": len(df),
+                "original_rows": original_count,
+                "filtered_rows": filtered_count,
                 "transformed_rows": len(transformed_df)
             }
             
@@ -129,19 +136,40 @@ class CSVTransformer:
                 # Jira field not mapped - set empty
                 result_df[jira_field] = ""
         
+        # Clean up NaN values - replace with empty strings
+        result_df = result_df.fillna("")
+        
         # Rename Labels columns to have the same name in the final CSV
         result_df = self._rename_labels_columns(result_df)
         
         return result_df
     
     def _rename_labels_columns(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Rename Labels_1, Labels_2, Labels_3 to all be 'Labels' in the final CSV"""
-        column_mapping = {}
+        """Keep Labels columns as Labels_1, Labels_2, Labels_3 for now - will rename during CSV writing"""
+        return df
+    
+    def _write_csv_with_duplicate_columns(self, df: pd.DataFrame, output_file: str) -> None:
+        """Write CSV with duplicate 'Labels' column names"""
+        import csv
+        
+        # Prepare the header with duplicate 'Labels' names
+        header = []
         for col in df.columns:
             if col.startswith('Labels_'):
-                column_mapping[col] = 'Labels'
+                header.append('Labels')
+            else:
+                header.append(col)
         
-        return df.rename(columns=column_mapping)
+        # Write the CSV file with proper quoting to handle multi-line cells
+        with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+            
+            # Write header
+            writer.writerow(header)
+            
+            # Write data rows
+            for _, row in df.iterrows():
+                writer.writerow(row.values)
     
     def _show_preview(self, df: pd.DataFrame) -> None:
         print(f"\n📄 Preview ({len(df)} rows):")

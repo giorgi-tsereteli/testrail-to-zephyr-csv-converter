@@ -240,10 +240,15 @@ class CSVTransformer:
             preconditions_content = str(preconditions_data).strip()
             sections.append(f"*Preconditions*\n\n{preconditions_content}\n")
         else:
-            sections.append("*Preconditions*\n\n[No preconditions data]\n----")
+            sections.append("*Preconditions*\n\n[No preconditions data]\n")
         
-        # Section 3: Steps  
-        sections.append("*Steps*\n\n[Steps content will go here]")
+        # Section 3: Steps - get actual data from Steps column
+        steps_data = row.get("Steps", "")
+        if pd.notna(steps_data) and str(steps_data).strip():
+            steps_content = str(steps_data).strip()
+            sections.append(f"*Steps*\n\n{steps_content}\n----")
+        else:
+            sections.append("*Steps*\n\n[No steps data]\n----")
         
         # Section 4: Expected Result
         sections.append("*Expected Result*\n\n[Expected Result content will go here]")

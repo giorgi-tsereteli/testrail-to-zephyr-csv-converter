@@ -32,7 +32,7 @@ class CSVTransformer:
         return {
             "column_mappings": {
                 "Summary": "Title",
-                "Description": "Preconditions"
+                "Description": "ID"
             },
             "static_values": {
                 "Issue Type": "Test",
@@ -52,7 +52,8 @@ class CSVTransformer:
                 "Labels_3": ""
             },
             "transformations": {
-                "Summary": "format_summary"
+                "Summary": "format_summary",
+                "Description": "format_description"
             },
             "jira_fields": [
                 "Issue Type", "Summary", "Product(s) Affected", "Parent", "Engineering Team",
@@ -62,7 +63,14 @@ class CSVTransformer:
     
     def transform(self, input_file: str, output_file: str, preview: bool = False, show_columns: bool = False) -> Dict:
         try:
-            df = pd.read_csv(input_file)
+            # Try different encodings to handle various CSV exports
+            try:
+                df = pd.read_csv(input_file, encoding='utf-8')
+            except UnicodeDecodeError:
+                try:
+                    df = pd.read_csv(input_file, encoding='latin-1')
+                except UnicodeDecodeError:
+                    df = pd.read_csv(input_file, encoding='cp1252')
             
             if show_columns:
                 self._show_available_columns(df)
@@ -105,6 +113,10 @@ class CSVTransformer:
                         if transform_func == "format_summary":
                             result_df[jira_field] = df.apply(
                                 lambda row: self.format_summary(row["Title"], row["ID"]), axis=1
+                            )
+                        elif transform_func == "format_description":
+                            result_df[jira_field] = df.apply(
+                                lambda row: self.format_description(row), axis=1
                             )
                         else:
                             result_df[jira_field] = result_df[jira_field].apply(
@@ -167,6 +179,29 @@ class CSVTransformer:
         else:
             id_str = "C00000"
         return f"{title_str} - {id_str}"
+    
+    def format_description(self, row: pd.Series) -> str:
+        """
+        Format description field with multiple sections from TestRail columns.
+        Structure: *Overview* + *Preconditions* + *Steps* + *Expected Result*
+        Each section separated by 2 line breaks.
+        """
+        sections = []
+        
+        # Section 1: Overview (using ID for now - will be replaced with actual Overview data)
+        sections.append("*Overview*\n\n[Overview content will go here]")
+        
+        # Section 2: Preconditions
+        sections.append("*Preconditions*\n\n[Preconditions content will go here]")
+        
+        # Section 3: Steps  
+        sections.append("*Steps*\n\n[Steps content will go here]")
+        
+        # Section 4: Expected Result
+        sections.append("*Expected Result*\n\n[Expected Result content will go here]")
+        
+        # Join all sections with 2 line breaks between them
+        return "\n\n".join(sections)
 
 
 def main():

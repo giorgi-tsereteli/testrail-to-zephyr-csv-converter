@@ -182,10 +182,20 @@ class CSVTransformer:
     
     def format_description(self, row: pd.Series) -> str:
         """
-        Format description field with multiple sections from TestRail columns.
-        Structure: *Overview* + *Preconditions* + *Steps* + *Expected Result*
+        Format description field with ID first, then multiple sections from TestRail columns.
+        Structure: ID + 1 line break + *Overview* + *Preconditions* + *Steps* + *Expected Result*
         Each section separated by 2 line breaks.
         """
+        # Get the ID and format it with C prefix if needed
+        test_id = row.get("ID", "")
+        if pd.notna(test_id):
+            id_str = str(test_id)
+            if not id_str.startswith('C'):
+                id_num = int(id_str) if id_str.isdigit() else 0
+                id_str = f"C{id_num:05d}"
+        else:
+            id_str = "C00000"
+        
         sections = []
         
         # Section 1: Overview (using ID for now - will be replaced with actual Overview data)
@@ -200,8 +210,8 @@ class CSVTransformer:
         # Section 4: Expected Result
         sections.append("*Expected Result*\n\n[Expected Result content will go here]")
         
-        # Join all sections with 2 line breaks between them
-        return "\n\n".join(sections)
+        # Start with ID + clear line break, then join sections with 2 line breaks between them
+        return f"{id_str}\n\n" + "\n\n".join(sections)
 
 
 def main():

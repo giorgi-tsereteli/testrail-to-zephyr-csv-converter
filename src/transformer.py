@@ -1,10 +1,12 @@
 """
 CSV Transformer Module - Converts TestRail CSV to Jira import format.
 
-🔧 QA ENGINEERS: To change Product(s) Affected value:
-   1. Find the line with "Product(s) Affected": "Platform"
-   2. Change "Platform" to "Dossier" or "RPT" as needed
-   3. Search for "CHANGE THIS VALUE HERE" to find it quickly
+🔧 QA ENGINEERS: To change hardcoded values:
+   1. Search for "CHANGE THIS VALUE HERE" to find all editable values
+   2. Edit these static values as needed:
+      - "Product(s) Affected": "Platform" (change to "Dossier", "RPT", etc.)
+      - "Parent": "3074219" (change to different Parent ID)
+      - "Engineering Team": "Team Platinum" (change to different team)
 """
 
 import pandas as pd
@@ -37,9 +39,20 @@ class CSVTransformer:
             "static_values": {
                 "Issue Type": "Test",
                 # ⚠️  EDIT HERE: Change "Platform" to "Dossier", "RPT" or other products as needed
-                # This will be the 3rd column in the Jira import file
-                "Product(s) Affected": "Platform",
-                "Project Key": "PROJ"
+                # 3rd column in the Jira import file
+                "Product(s) Affected": "Platform",  # <-- CHANGE THIS VALUE HERE
+                # ⚠️  EDIT HERE: Change "3074219" to different Parent ID as needed
+                # 4th column in the Jira import file
+                "Parent": "3074219",  # <-- CHANGE THIS VALUE HERE
+                # ⚠️  EDIT HERE: Change "Team Platinum" to different engineering team as needed
+                # 5th column in the Jira import file
+                "Engineering Team": "Team Platinum",  # <-- CHANGE THIS VALUE HERE
+                "Project Key": "PROJ",
+                # Empty Labels columns for QA engineers to manually fill if needed. Data on label is not exported from TestRail
+                # ⚠️ Added label MUST exist in the Jira instance beforehand. Example: "automation"
+                "Labels_1": "",
+                "Labels_2": "",
+                "Labels_3": ""
             },
             "transformations": {
                 "Priority": "priority_mapping",
@@ -47,8 +60,8 @@ class CSVTransformer:
                 "Summary": "format_summary"
             },
             "jira_fields": [
-                "Issue Type", "Summary", "Product(s) Affected", "Priority", "Component", 
-                "Description", "Project Key", "Labels"
+                "Issue Type", "Summary", "Product(s) Affected", "Parent", "Engineering Team",
+                "Priority", "Component", "Description", "Project Key", "Labels_1", "Labels_2", "Labels_3"
             ]
         }
     
@@ -109,7 +122,19 @@ class CSVTransformer:
                 # Jira field not mapped - set empty
                 result_df[jira_field] = ""
         
+        # Rename Labels columns to have the same name in the final CSV
+        result_df = self._rename_labels_columns(result_df)
+        
         return result_df
+    
+    def _rename_labels_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Rename Labels_1, Labels_2, Labels_3 to all be 'Labels' in the final CSV"""
+        column_mapping = {}
+        for col in df.columns:
+            if col.startswith('Labels_'):
+                column_mapping[col] = 'Labels'
+        
+        return df.rename(columns=column_mapping)
     
     def _show_preview(self, df: pd.DataFrame) -> None:
         print(f"\n📄 Preview ({len(df)} rows):")

@@ -32,8 +32,6 @@ class CSVTransformer:
         return {
             "column_mappings": {
                 "Summary": "Title",
-                "Priority": "Priority",
-                "Component": "Section",
                 "Description": "Preconditions"
             },
             "static_values": {
@@ -47,7 +45,6 @@ class CSVTransformer:
                 # ⚠️  EDIT HERE: Change "Team Platinum" to different engineering team as needed
                 # 5th column in the Jira import file
                 "Engineering Team": "Team Platinum",  # <-- CHANGE THIS VALUE HERE
-                "Project Key": "PROJ",
                 # Empty Labels columns for QA engineers to manually fill if needed. Data on label is not exported from TestRail
                 # ⚠️ Added label MUST exist in the Jira instance beforehand. Example: "automation"
                 "Labels_1": "",
@@ -55,13 +52,11 @@ class CSVTransformer:
                 "Labels_3": ""
             },
             "transformations": {
-                "Priority": "priority_mapping",
-                "Component": "extract_component",
                 "Summary": "format_summary"
             },
             "jira_fields": [
                 "Issue Type", "Summary", "Product(s) Affected", "Parent", "Engineering Team",
-                "Priority", "Component", "Description", "Project Key", "Labels_1", "Labels_2", "Labels_3"
+                "Description", "Labels_1", "Labels_2", "Labels_3"
             ]
         }
     
@@ -159,19 +154,6 @@ class CSVTransformer:
         if len(ignored) < 10:  # Only show if not too many
             print(f"      Ignored columns: {sorted(ignored)}")
         print()
-    
-    def priority_mapping(self, priority: Any) -> str:
-        if pd.isna(priority):
-            return "Medium"
-        priority_map = {"1": "Low", "2": "Medium", "3": "High", "4": "Highest", 
-                       "low": "Low", "medium": "Medium", "high": "High", "critical": "Highest"}
-        return priority_map.get(str(priority).lower(), "Medium")
-    
-    def extract_component(self, section: Any) -> str:
-        if pd.isna(section):
-            return ""
-        section_str = str(section)
-        return section_str.split(" > ")[0] if " > " in section_str else section_str
     
     def format_summary(self, title: Any, test_id: Any) -> str:
         if pd.isna(title):

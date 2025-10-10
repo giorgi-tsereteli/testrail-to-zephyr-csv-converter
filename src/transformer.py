@@ -1,5 +1,10 @@
 """
 CSV Transformer Module - Converts TestRail CSV to Jira import format.
+
+🔧 QA ENGINEERS: To change Product(s) Affected value:
+   1. Find the line with "Product(s) Affected": "Platform"
+   2. Change "Platform" to "Dossier" or "RPT" as needed
+   3. Search for "CHANGE THIS VALUE HERE" to find it quickly
 """
 
 import pandas as pd
@@ -31,6 +36,9 @@ class CSVTransformer:
             },
             "static_values": {
                 "Issue Type": "Test",
+                # ⚠️  EDIT HERE: Change "Platform" to "Dossier", "RPT" or other products as needed
+                # This will be the 3rd column in the Jira import file
+                "Product(s) Affected": "Platform",
                 "Project Key": "PROJ"
             },
             "transformations": {
@@ -39,7 +47,7 @@ class CSVTransformer:
                 "Summary": "format_summary"
             },
             "jira_fields": [
-                "Issue Type", "Summary", "Priority", "Component", 
+                "Issue Type", "Summary", "Product(s) Affected", "Priority", "Component", 
                 "Description", "Project Key", "Labels"
             ]
         }

@@ -87,7 +87,7 @@ class CSVTransformer:
             else:
                 # Custom CSV writing to handle duplicate column names
                 self._write_csv_with_duplicate_columns(transformed_df, output_file)
-                print(f"✅ Transformation complete: {output_file}")
+                print(f"\n✅ Transformation complete: {output_file}")
             
             return {
                 "success": True,

@@ -128,7 +128,7 @@ def command_transform(args) -> int:
     result = transformer.transform(args.input_file, args.output_file)
     
     if result['success']:
-        print(f"✅ Transformation completed successfully!")
+        print(f"\✅ Transformation completed successfully!")
         print(f"   Rows processed: {result['original_rows']} → {result['transformed_rows']}")
         
         if result['warnings']:

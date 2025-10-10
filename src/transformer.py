@@ -226,8 +226,13 @@ class CSVTransformer:
         
         sections = []
         
-        # Section 1: Overview (using ID for now - will be replaced with actual Overview data)
-        sections.append("*Overview*\n\n[Overview content will go here]")
+        # Section 1: Overview - get actual data from Overview column
+        overview_data = row.get("Overview", "")
+        if pd.notna(overview_data) and str(overview_data).strip():
+            overview_content = str(overview_data).strip()
+            sections.append(f"*Overview*\n\n{overview_content}\n----")
+        else:
+            sections.append("*Overview*\n\n[No overview data]\n----")
         
         # Section 2: Preconditions
         sections.append("*Preconditions*\n\n[Preconditions content will go here]")

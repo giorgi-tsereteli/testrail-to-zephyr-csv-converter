@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
 *$py.class
 
 # C extensions
@@ -205,3 +205,15 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project-specific files
+*.csv
+!examples/sample_testrail_export.csv
+!examples/expected_jira_output.csv
+transformer.log
+validation_*.txt
+*.bak
+
+# Temporary files
+*.tmp
+temp_*

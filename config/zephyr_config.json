@@ -1,0 +1,72 @@
+{
+  "description": "Custom configuration for specific TestRail to Zephyr transformation",
+  "version": "1.0",
+  
+  "column_mappings": {
+    "Summary": "Title",
+    "Description": "Steps",
+    "Priority": "Priority", 
+    "Component": "Section",
+    "Test Type": "Type",
+    "Estimated Time": "Estimate"
+  },
+  
+  "static_values": {
+    "Issue Type": "Test",
+    "Project Key": "ZEPHYR",
+    "Reporter": "testrail-import",
+    "Test Type": "Manual"
+  },
+  
+  "transformations": {
+    "Priority": "priority_mapping",
+    "Component": "extract_component", 
+    "Labels": "generate_test_labels",
+    "Description": "format_test_steps"
+  },
+  
+  "required_fields": [
+    "Summary",
+    "Issue Type",
+    "Project Key"
+  ],
+  
+  "jira_fields": [
+    "Project Key",
+    "Summary", 
+    "Issue Type",
+    "Priority",
+    "Component",
+    "Description",
+    "Labels",
+    "Reporter",
+    "Test Type",
+    "Estimated Time"
+  ],
+  
+  "validation_rules": {
+    "max_summary_length": 200,
+    "max_description_length": 10000,
+    "allowed_priorities": ["Low", "Medium", "High", "Critical"],
+    "required_issue_types": ["Test"]
+  },
+  
+  "custom_mappings": {
+    "priority_values": {
+      "1": "Low",
+      "2": "Medium", 
+      "3": "High",
+      "4": "Critical",
+      "Low": "Low",
+      "Normal": "Medium",
+      "High": "High", 
+      "Critical": "Critical"
+    },
+    "section_to_component": {
+      "UI Tests": "Frontend",
+      "API Tests": "Backend", 
+      "Integration Tests": "Integration",
+      "Database Tests": "Database"
+    }
+  }
+}

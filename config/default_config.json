@@ -1,0 +1,47 @@
+{
+  "description": "Default configuration for TestRail to Jira CSV transformation",
+  "version": "1.0",
+  
+  "column_mappings": {
+    "Summary": "Title",
+    "Description": "Preconditions",
+    "Priority": "Priority",
+    "Component": "Section",
+    "Labels": "Type"
+  },
+  
+  "static_values": {
+    "Issue Type": "Test",
+    "Project Key": "PROJ",
+    "Reporter": "system"
+  },
+  
+  "transformations": {
+    "Priority": "priority_mapping",
+    "Component": "extract_component",
+    "Labels": "generate_labels"
+  },
+  
+  "required_fields": [
+    "Summary",
+    "Issue Type"
+  ],
+  
+  "jira_fields": [
+    "Project Key",
+    "Summary",
+    "Issue Type",
+    "Priority",
+    "Component",
+    "Description",
+    "Labels",
+    "Reporter"
+  ],
+  
+  "validation_rules": {
+    "max_summary_length": 255,
+    "max_description_length": 32767,
+    "allowed_priorities": ["Lowest", "Low", "Medium", "High", "Highest"],
+    "required_issue_types": ["Test", "Story", "Bug"]
+  }
+}

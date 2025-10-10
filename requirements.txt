@@ -1,0 +1,24 @@
+# TestRail to Jira CSV Converter
+# Production dependencies
+
+# Core data processing
+pandas>=1.5.0,<3.0.0
+
+# For enhanced data validation and type checking  
+numpy>=1.21.0,<2.0.0
+
+# JSON schema validation (optional but recommended)
+jsonschema>=4.0.0,<5.0.0
+
+# Enhanced logging and configuration
+pyyaml>=6.0,<7.0
+
+# For better CLI experience
+colorama>=0.4.4,<1.0.0
+
+# Development dependencies (install with: pip install -r requirements.txt -r requirements-dev.txt)
+# pytest>=7.0.0
+# pytest-cov>=4.0.0  
+# black>=22.0.0
+# flake8>=5.0.0
+# mypy>=1.0.0

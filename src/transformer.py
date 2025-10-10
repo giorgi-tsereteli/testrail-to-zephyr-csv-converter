@@ -44,9 +44,13 @@ class CSVTransformer:
             ]
         }
     
-    def transform(self, input_file: str, output_file: str, preview: bool = False) -> Dict:
+    def transform(self, input_file: str, output_file: str, preview: bool = False, show_columns: bool = False) -> Dict:
         try:
             df = pd.read_csv(input_file)
+            
+            if show_columns:
+                self._show_available_columns(df)
+            
             transformed_df = self._apply_transformations(df)
             
             if preview:
@@ -66,16 +70,20 @@ class CSVTransformer:
             return {"success": False, "error": str(e)}
     
     def _apply_transformations(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Only process the columns we need - ignore all other TestRail columns
         result_df = pd.DataFrame(index=df.index)
         
         for jira_field in self.config["jira_fields"]:
             if jira_field in self.config["static_values"]:
+                # Static values (like "Test" for Issue Type)
                 result_df[jira_field] = self.config["static_values"][jira_field]
             elif jira_field in self.config["column_mappings"]:
                 testrail_field = self.config["column_mappings"][jira_field]
                 if testrail_field in df.columns:
+                    # Map from TestRail column to Jira field
                     result_df[jira_field] = df[testrail_field]
                     
+                    # Apply transformation if needed
                     if jira_field in self.config["transformations"]:
                         transform_func = self.config["transformations"][jira_field]
                         if transform_func == "format_summary":
@@ -87,8 +95,10 @@ class CSVTransformer:
                                 getattr(self, transform_func)
                             )
                 else:
+                    # Column not found in TestRail export - set empty
                     result_df[jira_field] = ""
             else:
+                # Jira field not mapped - set empty
                 result_df[jira_field] = ""
         
         return result_df
@@ -96,6 +106,26 @@ class CSVTransformer:
     def _show_preview(self, df: pd.DataFrame) -> None:
         print(f"\n📄 Preview ({len(df)} rows):")
         print(df.head(3).to_string(index=False))
+    
+    def _show_available_columns(self, df: pd.DataFrame) -> None:
+        """Show which columns are available in the TestRail export and which ones we're using."""
+        needed_columns = set(self.config["column_mappings"].values())
+        needed_columns.add("ID")  # Always need ID for Summary formatting
+        
+        available = set(df.columns)
+        using = needed_columns.intersection(available)
+        missing = needed_columns - available
+        ignored = available - needed_columns
+        
+        print(f"\n📋 TestRail Export Analysis:")
+        print(f"   Total columns in export: {len(available)}")
+        print(f"   ✅ Using: {sorted(using)}")
+        if missing:
+            print(f"   ❌ Missing (needed): {sorted(missing)}")
+        print(f"   ⏭️  Ignoring: {len(ignored)} columns")
+        if len(ignored) < 10:  # Only show if not too many
+            print(f"      Ignored columns: {sorted(ignored)}")
+        print()
     
     def priority_mapping(self, priority: Any) -> str:
         if pd.isna(priority):
@@ -126,7 +156,7 @@ class CSVTransformer:
 
 def main():
     transformer = CSVTransformer()
-    result = transformer.transform("examples/sample_testrail_export.csv", "examples/jira_import.csv", preview=True)
+    result = transformer.transform("examples/sample_testrail_export.csv", "examples/jira_import.csv", preview=True, show_columns=True)
     if not result['success']:
         print(f"Error: {result.get('error', 'Unknown error')}")
 

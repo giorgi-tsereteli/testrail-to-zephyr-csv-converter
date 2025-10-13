@@ -3,7 +3,7 @@ from src.transformer import CSVTransformer
 
 def main():
     transformer = CSVTransformer()
-    result = transformer.transform('examples/sample_testrail_export.csv', 'examples/jira_import.csv')
+    result = transformer.transform('examples/testrail_export.csv', 'examples/jira_import.csv')
     
     if result['success']:
         if 'filtered_rows' in result:

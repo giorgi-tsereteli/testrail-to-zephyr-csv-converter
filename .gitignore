@@ -208,8 +208,7 @@ __marimo__/
 
 # Project-specific files
 *.csv
-!examples/sample_testrail_export.csv
-!examples/expected_jira_output.csv
+!examples/testrail_export.csv
 transformer.log
 validation_*.txt
 *.bak

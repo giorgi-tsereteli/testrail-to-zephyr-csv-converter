@@ -264,7 +264,7 @@ class CSVTransformer:
 
 def main():
     transformer = CSVTransformer()
-    result = transformer.transform("examples/sample_testrail_export.csv", "examples/jira_import.csv", preview=True, show_columns=True)
+    result = transformer.transform("examples/testrail_export.csv", "examples/jira_import.csv", preview=True, show_columns=True)
     if not result['success']:
         print(f"Error: {result.get('error', 'Unknown error')}")
 

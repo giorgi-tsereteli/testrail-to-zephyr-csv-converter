@@ -29,7 +29,7 @@ def example_basic_transformation():
     
     # Transform the sample file
     result = transformer.transform(
-        input_file="examples/sample_testrail_export.csv",
+        input_file="examples/testrail_export.csv",
         output_file="examples/output_basic.csv"
     )
     
@@ -51,7 +51,7 @@ def example_custom_configuration():
     
     # Transform with custom settings
     result = transformer.transform(
-        input_file="examples/sample_testrail_export.csv",
+        input_file="examples/testrail_export.csv",
         output_file="examples/output_zephyr.csv"
     )
     
@@ -74,7 +74,7 @@ def example_preview_mode():
     
     # Preview transformation
     result = transformer.transform(
-        input_file="examples/sample_testrail_export.csv",
+        input_file="examples/testrail_export.csv",
         output_file="",  # Not used in preview mode
         preview=True
     )
@@ -94,7 +94,7 @@ def example_validation():
     validator = DataValidator(transformer.config)
     
     # Read sample data
-    df = pd.read_csv("examples/sample_testrail_export.csv")
+    df = pd.read_csv("examples/testrail_export.csv")
     
     # Validate input
     input_validation = validator.validate_input_data(df)
@@ -151,7 +151,7 @@ def example_custom_transformations():
     transformer = CustomTransformer()
     
     # Apply custom transformation
-    df = pd.read_csv("examples/sample_testrail_export.csv")
+    df = pd.read_csv("examples/testrail_export.csv")
     transformed_df = transformer._apply_transformations(df)
     
     print("Sample transformed labels:")
@@ -176,8 +176,8 @@ def example_batch_processing():
     
     # Simulate processing multiple files
     sample_files = [
-        ("examples/sample_testrail_export.csv", "examples/batch_output_1.csv"),
-        ("examples/sample_testrail_export.csv", "examples/batch_output_2.csv"),
+        ("examples/testrail_export.csv", "examples/batch_output_1.csv"),
+        ("examples/testrail_export.csv", "examples/batch_output_2.csv"),
     ]
     
     for input_file, output_file in sample_files:

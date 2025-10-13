@@ -51,7 +51,7 @@ Export your test cases from TestRail as CSV Ensuring following columns are inclu
 - `Steps` - Test steps
 - `Expected Result` - Expected outcome
 
-**💡** You don't need to change any code or paths. Just replace the `sample_testrail_export.csv` file with your data but keep the same filename
+**💡** You don't need to change any code or paths. Just replace the `testrail_export.csv` file with your data but keep the same filename
 
 ### Step 2: Transform the File
 ```bash
@@ -59,7 +59,7 @@ Export your test cases from TestRail as CSV Ensuring following columns are inclu
 ```
 
 This will:
-- Read `examples/sample_testrail_export.csv`
+- Read `examples/testrail_export.csv`
 - Transform it to Jira format
 - Save as `examples/jira_import.csv`
 - Show transformation log in terminal
@@ -129,8 +129,8 @@ testrail-zephyr-csv-converter/
 │   ├── transformer.py      # Main transformation logic
 │   └── __init__.py
 ├── examples/
-│   ├── sample_testrail_export.csv    # Sample TestRail export
-│   └── jira_import.csv               # Generated Jira import file
+│   ├── testrail_export.csv          # TestRail export file
+│   └── jira_import.csv              # Generated Jira import file
 ├── run.py                  # Simple runner script
 ├── test.sh                 # Quick test script  
 ├── setup.sh                # Environment setup

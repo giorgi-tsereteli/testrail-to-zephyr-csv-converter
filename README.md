@@ -59,10 +59,16 @@ Export your test cases from TestRail as CSV Ensuring following columns are inclu
 ```
 
 This will:
-- Read `examples/testrail_export.csv`
+- Read `data/testrail_export.csv`
 - Transform it to Jira format
-- Save as `examples/jira_import.csv`
+- Save as `data/jira_import.csv`
 - Show transformation log in terminal
+
+**🗑️ Easy Cleanup**: To delete generated files:
+```bash
+./delete jira_import      # Delete the generated import file
+./delete testrail_export  # Delete the TestRail export file
+```
 
 ### Step 3: Customize Static Values (Required for real data)
 Edit the hardcoded values in `src/transformer.py`:
@@ -128,11 +134,12 @@ testrail-zephyr-csv-converter/
 ├── src/
 │   ├── transformer.py      # Main transformation logic
 │   └── __init__.py
-├── examples/
+├── data/
 │   ├── testrail_export.csv          # TestRail export file
 │   └── jira_import.csv              # Generated Jira import file
 ├── run.py                  # Simple runner script
-├── test.sh                 # Quick test script  
+├── test.sh                 # Quick test script
+├── delete                  # Delete generated files script
 ├── setup.sh                # Environment setup
 ├── requirements.txt        # Python dependencies
 └── README.md               # This documentation

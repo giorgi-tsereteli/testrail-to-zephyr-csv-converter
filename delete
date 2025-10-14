@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Simple script to handle delete commands
+# Usage: ./delete [jira_import|testrail_export]
+
+if [ "$1" = "jira_import" ]; then
+    if [ -f "data/jira_import.csv" ]; then
+        rm "data/jira_import.csv"
+        echo ""
+        echo "🗑️  Deleted jira_import.csv"
+        echo ""
+    else
+        echo ""
+        echo "⚠️  jira_import.csv not found in data/ directory"
+        echo ""
+    fi
+elif [ "$1" = "testrail_export" ]; then
+    if [ -f "data/testrail_export.csv" ]; then
+        rm "data/testrail_export.csv"
+        echo "🗑️  Deleted testrail_export.csv"
+    else
+        echo ""
+        echo "⚠️  testrail_export.csv not found in data/ directory"
+        echo ""
+    fi
+else
+    echo "Usage: ./delete [jira_import|testrail_export]"
+    echo "Available commands:"
+    echo "  jira_import      - Delete the generated jira_import.csv file"
+    echo "  testrail_export  - Delete the testrail_export.csv file"
+fi

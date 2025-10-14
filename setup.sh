@@ -36,7 +36,7 @@ if [ $? -eq 0 ]; then
     echo ""
     echo "Quick start:"
     echo "  1. Activate the virtual environment: source venv/bin/activate"  
-    echo "  2. Run a preview: python cli.py preview examples/testrail_export.csv"
+    echo "  2. Run a preview: python cli.py preview data/testrail_export.csv"
     echo "  3. Transform a file: python cli.py transform input.csv output.csv"
     echo ""
     echo "📖 See README.md for detailed usage instructions."

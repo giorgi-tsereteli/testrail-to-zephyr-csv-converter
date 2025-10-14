@@ -208,7 +208,7 @@ __marimo__/
 
 # Project-specific files
 *.csv
-!examples/testrail_export.csv
+!data/testrail_export.csv
 transformer.log
 validation_*.txt
 *.bak

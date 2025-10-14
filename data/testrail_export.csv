@@ -1,0 +1,396 @@
+"ID","Title","Attachments","Created By","Created On","Expected Result","Forecast","Labels","Manual/Automated","Overview","Preconditions","Priority","References","Section","Section Depth","Section Description","Section Hierarchy","Steps","Suite","Suite ID","Template","Test Review Comments","Type","Updated By","Updated On"
+"C24687","Account: API - Verify that Merging RPT And F180 Users is successful and has  the correct authorization","","John Ross Saria","4/19/2021 3:33 PM","Merging two users should also merge their data","",""," Automated","Merges in Super aren’t bringing over the modules/permissions from the secondary account over to the primary account","1. RPT Admin
+2. F180 Admin","High","ENG-7523, ENG-17941, QAB-1, TRIAGE-17373, ENG-20952, TRIAGE-17846, ENG-23881, ENG-23918","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","1. Login as RPT Admin
+2. Create an RPT User
+3. Log out
+4. Login as F180 admin 
+5. Create an F180 user
+6. Log out
+7. Login as super admin
+8. Search for the primary user to be merged(Created RPT user)
+9. Click Merge Accounts link on the right side
+10. Search for the secondary user to be merged(Created F180 user)
+11. Click Merge Accounts again
+12. Click Merge
+13. Verify that the merge is successful and that the data is successfully merged
+14. Repeat steps 1-12 but this time reverse the primary PID and the secondary PID
+15. Repeat steps 1-14 but this time have the two users on a different tenant","Master","S1","Test Case  (Text)","","Functional","Mark Sapp","7/6/2023 3:30 PM"
+"C151824","SSO: SAML / Okta - F180 login to Account with valid creds, single tenant, clear cache(Platform-sso)","","Quinn Collins","8/10/2022 11:53 AM","For this test, you must clear your browser cache to start.  There will be other tests that do not clear the cache later.
+
+Validation should verify that the user is brought to the account Home page 
+
+Validation should verify that the user is brought to the correct tenant","",""," Automated","An F180 (only) user with SSO setup through Okta,(platform-sso)
+I should be able to login to the correct tenant when logging into the system with a clear browser cache.","You will need:
+1 - a valid SSO tenant that has only F180 module and configured with Okta SSO
+1a - the SSO url for login that routes through Account
+2 - a valid F180 user in that tenant","Critical","ENG-23881, ENG-23918, QAB-1363","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an F180 user
+When I login to the system via the SSO url directed through Account
+Then I should login successfully
+And the products I have access to should be shown in the left nav menu
+And I should be in the correct tenant
+
+
+1 - Clear your browser cache
+2 - Navigate to the SSO url for login
+3 - enter the user credentials in the SSO window
+4 - verify you are logged into the CORRECT tenant and you have access to F180 according to your permissions
+","Master","S1","Test Case  (Text)","","Regression","Vino Muthukrishnan","8/2/2023 6:40 AM"
+"C159130","Sso okta login with valid creds, multiple tenants, no default tenant, cookie exists","","Quinn Collins","8/24/2022 11:16 AM","
+Validation should verify that the user is brought to the account Home page 
+
+    Validation should verify that the user is brought to the correct tenant if i have no default tenant set, and i have cookies with session data, then i should access a second tenant
+
+","",""," Automated","A multi-tenant user with SSO setup through Okta,(platform-sso)
+I should be able to login to the correct tenant when logging into the system with a clear browser cache.
+
+Given I am an multi-tenant user
+When I login to the system via the SSO url directed through Account
+Then I should login successfully
+And the products I have access to should be shown in the left nav menu
+And I should be in the correct tenant","
+For this test, you must clear your browser cache to start.  There will be other tests that do not clear the cache later.
+
+You will need:
+1 - a valid SSO tenant that has a user with multiple-tenants and configured with Okta SSO
+1a - the SSO url for login that routes through Account
+2 - a valid multi-tenant user in that tenant
+","Medium","QAB-1614","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","1 - Clear your browser cache
+2 - Navigate to the SSO url for login to tenant 1
+3 - enter the user credentials in the SSO window
+4 - verify you are logged into the CORRECT tenant and you have access to F180 according to your permissions
+
+5 - logout
+
+6 - do not clear your cache
+
+7 - log back in and access a different tenant
+
+8 - you should be on the second tenant
+
+
+
+","Master","S1","Test Case  (Text)","","Regression","Vino Muthukrishnan","8/2/2023 6:41 AM"
+"C160877","Sso okta login with valid crews, multiple tenants, no default tenant, cookie deleted","","Quinn Collins","8/30/2022 2:17 PM","
+
+Validation should verify that the user is brought to the account Home page
+
+Validation should verify that the user is brought to the correct tenant if i have no default tenant set, and i have cookies with session data, then i should access a second tenant
+
+","",""," Automated","
+
+A multi-tenant user with SSO setup through Okta,(platform-sso)
+I should be able to login to the correct tenant when logging into the system with a clear browser cache.
+
+Given I am an multi-tenant user
+When I login to the system via the SSO url directed through Account
+Then I should login successfully
+And the products I have access to should be shown in the left nav menu
+And I should be in the correct tenant
+
+","
+
+For this test, you must clear your browser cache to start.  There will be other tests that do not clear the cache later.
+
+You will need:
+1 - a valid SSO tenant that has a user with multiple-tenants and configured with Okta SSO
+1a - the SSO url for login that routes through Account
+2 - a valid multi-tenant user in that tenant
+","Medium","QAB-1615","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","
+
+1 - Clear your browser cache
+2 - Navigate to the SSO url for login to tenant 1
+3 - enter the user credentials in the SSO window
+4 - verify you are logged into the CORRECT tenant and you have access to F180 according to your permissions
+
+5 - logout
+
+6 - clear your cache
+
+7 - log back in and access a different tenant
+
+8 - you should be on the second tenant
+","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C41612","Account UI: I can login as RPT Candidate","","Quinn Collins","8/25/2021 10:22 AM","Logged in successfully and the product I have access to are displayed on the left nav menu.
+
+","",""," Automated","As a tenure user 
+I should be able to login to the correct tenant when logging into the system with a clear browser cache.","1 - a valid tenant that has been configured with no SSO
+1a - the account url for login
+2 - a valid RPT/FS user in that tenant","Critical","QAB-1465","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user with least privilege.
+When I login to the system via the account login page
+Then I should login successfully
+And I should be in the correct tenant
+And the products I have access to should be shown in the left nav menu
+","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:13 PM"
+"C141995","Account UI: Login with invalid credentials, single tenant","","Vino Muthukrishnan","7/6/2022 11:28 AM","Login should fail and error msg -""""Your email or password is incorrect."""" should be displayed.","",""," Automated","As a tenure user with no SSO setup 
+I should be unable to login to the correct tenant when logging into the system with a clear browser cache using invalid credentials."," - a valid Non sso tenant
+1a - the account url for login
+2 - a valid RPT/FS user in that tenant","Critical","QAB-1466","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+When I login to the system via the account url but provided incorrect password
+Then I should not login successfully
+And I should see some error indicating the creds are invalid","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C142406","Account UI: RPT/FS login with valid creds, multiple tenants, default tenant set","","Vino Muthukrishnan","7/11/2022 8:01 AM","User logged in successfully and brought to the correct tenant(default tenant).
+Tenant list are displayed under profile page","",""," Automated","As a tenure user with no SSO setup and configured for multiple tenants. And I have default tenant set. 
+when logging into the system with a clear browser cache, I should be brought into the default tenant
+
+","1 - a valid user that has access to multiple tenants
+2 - a valid user that has designated a default tenant","Critical","QAB-1468","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I login as RPT/FS user via the account login page
+Then I should not see the account picker
+And I should login successfully
+And I should be in the default tenant
+And the products I have access to should be shown in the left nav menu
+And I can see multiple tenants in the account list under my profile","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C146394","Account UI: RPT/FS login with valid creds, multiple tenants, no default tenant set","","Dave Irwin","7/25/2022 3:06 PM","User logged in successfully and brought to the correct tenant","",""," Automated","As a tenure user with no SSO setup and configured for multiple tenants. And I don't have default tenant set. 
+when logging into the system with a clear browser cache, I should be brought into the default tenant
+
+","1 - a valid user that has access to multiple tenants
+","Medium","QAB-1467","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I login as RPT/FS user via the account login page
+And I should see the account picker with all tenants i have access to
+When I pick the desired tenant
+Then I should be in the correct tenant
+And the products I have access to should be shown in the left nav menu
+","Master","S1","Test Case  (Text)","","Regression","Vino Muthukrishnan","8/2/2023 6:29 AM"
+"C146178","Account UI: SSO - SAML / Okta - RPT/FS login with valid creds, single tenant, clear cache","","Vino Muthukrishnan","7/21/2022 7:02 AM","User successfully redirected to sso login page (Okta)
+User made a sucessfull login with valid credentials
+User was brought to the home page of correct tenant.
+
+","",""," Automated","As a tenure user with SSO setup through Okta,
+I should be able to login to the correct tenant when logging into the system with a clear browser cache.
+
+Covers [C12175]
+
+","1 - a valid SSO tenant that has been configured with Okta SSO
+1a - the SSO url for login
+2 - a valid RPT/FS user in that exist in only one tenant","Medium","QAB-1361","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+When I login to the system via the SSO url
+Then I should login successfully
+And the products I have access to should be shown in the left nav menu
+And I should be on the correct tenant","Master","S1","Test Case  (Text)","For this test, you must clear your browser cache to start.","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C146443","Account UI: RPT/FS login with valid creds, multiple tenants, no default tenant set, switch tenants when cookie exists","","Quinn Collins","7/27/2022 11:12 AM","User logged in successfully and brought to the correct tenant twice","",""," Automated","As a tenure user with no SSO setup and configured for multiple tenants. And I don't have default tenant set.
+when logging into the system and selecting a tenant, then logging out, and logging back in and selecting a different tenant. I should be on the correct tenant.
+
+","1 - a valid user that has access to multiple tenants and has not default tenant set","Medium","QAB-1469","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I login as RPT/FS user via the account login page
+And I should see the account picker with all tenants i have access to
+When I pick the desired tenant
+Then I should be in the correct tenant
+And the products I have access to should be shown in the left nav menu
+And I log out
+And I login as RPT/FS user via the account login page
+And I should see the account picker with all tenants i have access to
+When I pick the desired tenant
+Then I should be in the correct tenant","Master","S1","Test Case  (Text)","","Regression","Vino Muthukrishnan","8/2/2023 6:32 AM"
+"C146408","Account UI: SSO - SAML / Okta - RPT/FS login with invalid password, single tenant, clear cache","","Vino Muthukrishnan","7/26/2022 6:20 AM","","",""," Automated","As a tenure user with SSO setup through Okta,
+I should not be able to login to the correct tenant when logging into the system with a clear browser cache.","","Medium","QAB-1362","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+When I login to the system via the SSO url but provide incorrect creds
+Then I should not login successfully
+And I should see some error indicating the creds are invalid","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C146682","Account UI: Non-SSO: RPT/FS login with valid creds, multiple tenants, default tenant set, cookie exists for non-default tenant","","Vino Muthukrishnan","8/1/2022 7:49 AM","User should always login to the default tenant despite cookie info
+User should not see account picker while login
+User should have correct privilage","",""," Automated","As a tenure user with no SSO setup and configured for multiple tenants
+If I login and I have not cleared my browser cache (i.e., I have an existing cookie for a non-default tenant)
+And I have default tenant set then I should still login to my default tenant","1 - a valid user that has access to multiple tenants
+2 - a valid user that has designated a default tenant
+3 - user has an existing cookie from a previous logi(for non default-tenant)","Medium","QAB-1470","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+And I have a cookie that exists from a previous login for a non-default tenant
+And I am configured to access multiple tenants
+And I have designated a default tenant
+When I login to the system via the account login page
+Then I should login successfully
+And I should be in the default tenant
+And the products I have access to should be shown in the left nav menu","Master","S1","Test Case  (Text)","","Regression","Vino Muthukrishnan","8/2/2023 6:33 AM"
+"C152971","Account UI: Non-SSO - F180 legacy login in US with valid creds, single tenant, no cookies","","Vino Muthukrishnan","8/12/2022 12:07 PM","verify you are logged into the CORRECT tenant and you have access to the product f180 and other product if there is any
+
+verify that the user is brought to the account Home page and you have the right privilage
+","",""," Automated","As a f180 user with no SSO setup 
+I should be able to login to the correct tenant when logging into the system via F180 page with a clear browser cache.","1 -  a F180 only tenant without SSO setup
+1a - the f180 url of US domain
+2 - a valid  user in that tenant","Medium","QAB-1619","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an f180 user with least privilege.
+When I login to the system via the F180 legacy page
+Then I should login successfully
+And the products I have access to should be shown in the left nav menu
+And I should be in the correct tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C159021","Account UI: SSO-US Login Google/Shib3 Success Single Tenant","","Vino Muthukrishnan","8/23/2022 8:17 AM","User should login with right privilege
+User should be brought to the home page of correct/default tenant.
+
+
+","",""," Automated","As a user with a single tenant with google auth and shib3 feature enabled
+I should be able to login to the correct tenant when logging into the system","1 - a valid tenant that has been configured google SSO and shibv3 feature flag
+2 - a valid user with single tenant setup","Critical","QAB-1632","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user
+When I login to the system via the google auth link
+Then I should login successfully with correct privilage
+And  I should be on the correct tenant
+And the product i have access to should be shown on the left nav menu","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C150404","Account UI: SAML / Okta - RPT/FS login with invalid username, single tenant, clear cache","","Vino Muthukrishnan","8/3/2022 8:08 AM","Login should fail  and error msg to be displayed on the OKTA page """"Unable to sign in""""","",""," Automated","As a tenure user with SSO setup through Okta,
+I not should make a successful login with invalid credentials ,when logging into the system with a clear browser cache.","1 - a valid SSO tenant that has been configured with Okta SSO
+1a - the SSO url for login
+2 - a valid RPT/FS user in that tenant that should exist in OKTA","Medium","QAB-1618","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+When I login to the system via the SSO url but provide incorrect username
+Then I should not login successfully
+And I should see some error indicating the creds are invalid","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C195017","Account UI: Non-SSO - RPT/FS login with invalid username, single tenant, clear cache","","Vino Muthukrishnan","10/20/2022 4:15 AM","User login should fail and error message should be displayed on the account login payin sayin """"Your email or password is incorrect.""""","",""," Automated","As a tenure user with no SSO setup 
+I should not be able to login to the correct tenant when logging into the system using invalid credentials.","1 - a valid tenant that has been configured no SSO
+1a - the account url for login
+2 - a valid RPT/FS user in that tenant","Medium","QAB-1624","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an RPT/FS user
+When I login to the system via the account url, but provided incorrect username
+Then I should not make a successfully login
+And I should see some error indicating the creds are invalid","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C195613","Account UI: SSO -  Login Google/Shib3 Successful Multi-Tenant, No Default Tenant set, Cookie Deleted","","Vino Muthukrishnan","10/25/2022 7:41 AM","User login is successfull
+User asked for cred when cookies deleted.
+User was taken to correct home page of selected tenant.","",""," Automated","As an user with access to MULTIPLE tenants with google auth and shib3 feature enabled
+I should be able to login to the correct tenant when logging into the system","1 - 2 valid tenants that have been configured google SSO and shibv3 feature flag
+2 - a single valid user in those tenants","Medium","QAB-1634","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Google 
+and have access to multiple tenants 
+and I do not have a default tenant set
+and I do not have any previous session data
+
+When I login to the system via the google auth link
+Then I should see the account picker 
+And upon selection, 
+And I should login successfully to the chosen tenant
+And I log out and delete my browser cookies
+And I login again
+And I should ask for credentials and should be taken to the account picker page.
+And I select another tenant
+And I should be on the other tenant I selected","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C195663","Account UI: SSO -  Login Google/Shib3 Successful Multi-Tenant, No Default Tenant set, Cookie exists","","Vino Muthukrishnan","10/27/2022 11:38 AM","User logged in successfully to tenant 2. ","",""," Automated","As a user with access to MULTIPLE tenants with google auth and shib3 feature enabled
+I should be able to login to the correct tenant when logging into the system","1 - 2 valid tenants that have been configured google SSO and shibv3 feature flag
+2 - a single valid user in those tenants","Medium","QAB-1654","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Google 
+
+and I have access to multiple tenants 
+
+and I do not have a default tenant set
+
+and I have previous session data that exists for a login
+When I login to the system via the google auth link
+And I select a different tenant
+
+Then I should login successfully to the second tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C202900","Account UI: SSO - Login Google/Shib3 Successful Multi-Tenant, Default Tenant Set, Cookie Deleted","","Vino Muthukrishnan","11/3/2022 5:44 AM","Account picker is not displayed. User successfully logged into the default tenant, Regardless of the previous login and any cookie data.
+","",""," Automated","As a user with access to MULTIPLE tenants with google auth and shib3 feature enabled and has a default tenant.
+I should be  login to my default tenant when logging into the system","1 - 2 valid tenants that have been configured google SSO and shibv3 feature flag
+2 - a single valid user in those tenants
+
+3 - that user should have one of the 2 valid tenants set as their “default” tenant","Medium","QAB-1653","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Google 
+and I have access to multiple tenants 
+and I have a default tenant set
+
+When I login to the system via the google auth link
+And I login to my non-default tenant
+And I logout
+And I clear cookies/browser cache
+And I log back in without specifying a tenant
+Then I should  not see the account picker 
+And I should login successfully to my default tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C203421","Account UI: SSO - Login Google/Shib3 Successful Multi-Tenant, Default Tenant Set, Cookie exists","","Vino Muthukrishnan","11/4/2022 8:15 AM","Account picker is not displayed. User logged into the default tenant, Regardless of the previous login and any cookie data.","",""," Automated","As a user with access to MULTIPLE tenants with google auth and shib3 feature enabled
+I should be  login to my default tenant when logging into the system","1 - 2 valid tenants that have been configured google SSO and shibv3 feature flag
+2 - a single valid user in those tenants, the user should have one of the 2 valid tenants set as their “default” tenant","Medium","QAB-1652","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Google 
+and I have access to multiple tenants 
+and I have a default tenant set
+
+When I login to the system via the google auth link
+And I login to my non-default tenant
+And I logout
+And I do not clear cookies/browser cache
+And I log back in without specifying a tenant
+Then I should  not see the account picker 
+And I should login successfully to my default tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C203714","Account UI: SSO - Google/Shib3 login with Invalid Password Single Tenant","","Vino Muthukrishnan","11/8/2022 4:45 AM","Login should fail and user should see error message on the google login page """"Wrong password. Try again or click Forgot password to reset it.""""","",""," Automated","As a user with a single tenant with google auth and shib3 feature enabled
+I should not be able to login to thes system with invalid password","You will need:
+1 - a valid tenant that has been configured google SSO and shibv3 feature flag
+2 - a valid user in that tenant","Critical","QAB-1633","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user
+When I login to the system via the google auth link with invalid password
+Then I should not make a successfully login.
+And I should see the Error message on the sso login page","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:38 PM"
+"C211132","Account UI: Non-SSO -F180 legacy login with invalid password","","Vino Muthukrishnan","11/16/2022 5:54 AM","Login should fail. Error message should appear on the login page.
+
+
+","",""," Automated","As a far faculty via f180-page I should not be able to login with invalid password.","Valid f180 user.","Medium","QAB-1620","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","
+1. Navigate to f180 login page in the browser
+2. Attempt to login as a far faculty with valid username and invalid password.
+3. Then I should see an error modal with message """"Authentication Failed"""" in the F180-login page
+","Master","S1","Test Case  (Text)","Login failed and Error modal displayed with title """"Authentication Failed""""","Regression","Vino Muthukrishnan","8/2/2023 6:21 AM"
+"C211391","Account UI: SSO - Okta multi tenant login, default, cookies exists","","Vino Muthukrishnan","11/22/2022 8:51 AM","Account picker is not displayed. User successfully logged into the default tenant.","",""," Automated","As a user with access to MULTIPLE tenants with Okta auth and has a default tenant.
+I should be  login to my default tenant when logging into the system","1 - 2 valid tenants that have been configured okta SSO.
+2 - a single valid user in those tenants
+
+3 - that user should have one of the 2 valid tenants set as their “default” tenant","Critical","QAB-1616","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Okta
+and I have access to multiple tenants
+and I have a default tenant set
+
+When I login to the system via the Okta link
+And I navigate to my non-default tenant
+And I logout
+And I log back in without specifying a tenant
+Then I should not see the account picker
+And I should login successfully to my default tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C211435","Account UI: SSO - Okta multi tenant login, default set, cookies deleted","","Vino Muthukrishnan","11/24/2022 9:18 AM","Account picker is not displayed. User successfully logged into the default tenant, Regardless of the previous login and any cookie data.","",""," Automated","As a user with access to MULTIPLE tenants with Okta auth and has a default tenant.
+I should be  login to my default tenant when logging into the system","1 - 2 valid tenants that have been configured okta SSO.
+2 - a single valid user in those tenants
+
+3 - that user should have one of the 2 valid tenants set as their “default” tenant","Critical","QAB-1651","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","Given I am an user with SSO configured with Okta
+and I have access to multiple tenants
+and I have a default tenant set
+
+When I login to the system via the Okta link
+And I navigate to my non-default tenant
+And I logout
+And I clear cookies/browser cache
+And I log back in without specifying a tenant
+Then I should  not see the account picker
+And I should login successfully to my default tenant","Master","S1","Test Case  (Text)","","Regression","Mark Sapp","7/6/2023 3:37 PM"
+"C41609","Account UI: I can login as Institutional Admin","","Quinn Collins","8/25/2021 10:18 AM","","",""," Automated","","","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","    When I log in as an IA user
+
+    Then I should be on the page with title """"Home - Interfolio""""
+
+    And I should see the """"Home"""" navigation item
+
+    And I log out
+","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:09 PM"
+"C41610","Account UI: I should not be able to login as Invalid User","","Quinn Collins","8/25/2021 10:20 AM","","",""," Automated","","","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","    When I log in as an Invalid user
+
+    Then I should see """"Your email or password is incorrect."""" text message on the page
+","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:10 PM"
+"C41611","Account UI: I can login as RPT Admin","","Quinn Collins","8/25/2021 10:21 AM","","",""," Automated","","","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","    When I log in as a RPT_Admin user
+
+    Then I should be on the page with title """"Home - Interfolio""""
+
+And I should see the """"Home"""" navigation item
+
+    And I log out
+","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:13 PM"
+"C41614","Account UI: I can login as Unit Admin","","Quinn Collins","8/25/2021 10:23 AM","","",""," Automated","","","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","    When I log in as an Unit_Admin user
+
+    Then I should be on the page with title """"Home - Interfolio""""
+
+    And I should see the """"Home"""" navigation item
+
+    And I log out
+","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:12 PM"
+"C41678","Account UI: I can login as a Faculty Search user","","Quinn Collins","8/25/2021 10:24 AM","","",""," Automated","","    When I log in as a FS user
+
+    Then I should be on the page with title ""Home - Interfolio""
+
+    And I should see the ""Home"" navigation item
+
+    And I log out
+","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:12 PM"
+"C41679","Account UI: I can login as a Dossier user","","Quinn Collins","8/25/2021 10:25 AM","","",""," Automated","","    When I am log in as a Dossier user
+
+    Then I should be on the page with title ""Dossier Home - Dossier - Interfolio""
+
+And I should see the ""Home"" navigation item
+
+    And I log out
+","Medium","","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","","Master","S1","Test Case  (Text)","","Smoke","Giorgi Tsereteli","8/12/2025 9:11 PM"
+"C444416","Splinter Test: Migrate this test to a JIRA ticket","","Aaron Downing","11/15/2023 2:01 PM","a Jira ticket is created with a reference to the testrail ticket
+all relevant testrail fields are transitioned to the appropriate jira fields","",""," Manual","This test case will be used to test migrating TestRail data to Jira","A testrail test case exists","Low","QAB-4004","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","execute splinter with a specific test case id","Master","S1","Test Case  (Text)","","Functional","Aaron Downing","11/17/2023 2:29 PM"
+"C211256","LM: UI – Unit Viewer Role – Event in Faculty profile should be read only.","","Zarah Caparro","11/21/2022 2:26 PM","Event  should be read only. User should not be able to create / edit Event.","",""," Automated","With the navigation items having been removed for non-admin users in LM, we need to make sure that users can not go directly to the urls or child urls.","lm_authz feature flag is enabled to a tenant","Critical","ENG-23475, QAB-3450","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","1.	Login as LM Unit Viewer.
+2.	Navigate to Faculty > Profile > Timeline Option 
+3.	Check the Adding / Edit Event
+
+","Master","S1","Test Case  (Text)","","Regression","Mukilan","1/5/2024 8:16 AM"
+"C12195","Account UI: NON SSO - Verify non-SSO logout routes to correct URL","","Sharmaine Bernardo","12/7/2020 12:56 PM","Non - SSO logout will redirect to the correct logout_url","",""," Automated","Non- SSO logout routes to correct URL","Should have user credentials","High","QAB-3516","E2E","2","Test cases automated in the E2E test harness","Account > Automation > E2E","1. Login to https://account-test.interfolio.com/login
+2. Navigate to its nav links
+3. Logout
+4. Verify that logout will redirect to the correct logout_url
+
+","Master","S1","Test Case  (Text)","","Regression","Giorgi Tsereteli","8/12/2025 9:14 PM"

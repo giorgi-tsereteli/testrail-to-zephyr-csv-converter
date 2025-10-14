@@ -1,12 +1,12 @@
 """
 CSV Transformer Module - Converts TestRail CSV to Jira import format.
 
-🔧 QA ENGINEERS: To change hardcoded values:
-   1. Search for "CHANGE THIS VALUE HERE" to find all editable values
-   2. Edit these static values as needed:
-      - "Product(s) Affected": "Platform" (change to "Dossier", "RPT", etc.)
-      - "Parent": "3074219" (change to different Parent ID)
-      - "Engineering Team": "Team Platinum" (change to different team)
+QA ENGINEERS: To change hardcoded values:
+1. Search for "CHANGE THIS VALUE HERE" to find all editable values
+2. Edit these static values as needed:
+    - "Product(s) Affected": "Platform" (change to "Dossier", "RPT", etc.)
+    - "Parent": "3074219" (change to different Parent ID)
+    - "Engineering Team": "Team Platinum" (change to different team)
 """
 
 import pandas as pd
@@ -43,13 +43,13 @@ class CSVTransformer:
                 "Product(s) Affected": "Platform",  # <-- CHANGE THIS VALUE HERE
                 # ⚠️  EDIT HERE: Change "3074219" to different Parent ID as needed
                 # 4th column in the Jira import file
-                "Parent": "3074219",  # <-- CHANGE THIS VALUE HERE
+                "Parent": "3660500",  # <-- CHANGE THIS VALUE HERE
                 # ⚠️  EDIT HERE: Change "Team Platinum" to different engineering team as needed
                 # 5th column in the Jira import file
                 "Engineering Team": "Team Platinum",  # <-- CHANGE THIS VALUE HERE
                 # Labels_3 is empty for QA engineers to manually fill if needed
                 # ⚠️ Added label MUST exist in the Jira instance beforehand. Example: "automation"
-                "Labels_3": ""
+                "Labels_3": "" # <-- CHANGE THIS VALUE HERE (Optional)
             },
             "transformations": {
                 "Summary": "format_summary",
@@ -87,7 +87,12 @@ class CSVTransformer:
             else:
                 # Custom CSV writing to handle duplicate column names
                 self._write_csv_with_duplicate_columns(transformed_df, output_file)
-                print(f"\n✅ Transformation complete: {output_file}")
+                
+                # Print absolute path first
+                import os
+                abs_path = os.path.abspath(output_file)
+                print(f"\n📁 File location: {abs_path}\n")
+                print(f"✅ Transformation complete: {output_file}")
             
             return {
                 "success": True,
@@ -264,7 +269,7 @@ class CSVTransformer:
 
 def main():
     transformer = CSVTransformer()
-    result = transformer.transform("examples/testrail_export.csv", "examples/jira_import.csv", preview=True, show_columns=True)
+    result = transformer.transform("data/testrail_export.csv", "data/jira_import.csv", preview=True, show_columns=True)
     if not result['success']:
         print(f"Error: {result.get('error', 'Unknown error')}")
 

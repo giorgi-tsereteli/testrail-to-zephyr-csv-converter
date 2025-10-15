@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 # Test installation
 echo "🧪 Testing installation..."
-python cli.py --help > /dev/null
+python3 -c "from src.transformer import CSVTransformer; print('✅ Transformer module loaded successfully')"
 
 if [ $? -eq 0 ]; then
     echo "✅ Setup completed successfully!"
@@ -35,9 +35,9 @@ if [ $? -eq 0 ]; then
     echo "🎉 You're ready to use the CSV converter!"
     echo ""
     echo "Quick start:"
-    echo "  1. Activate the virtual environment: source venv/bin/activate"  
-    echo "  2. Run a preview: python cli.py preview data/testrail_export.csv"
-    echo "  3. Transform a file: python cli.py transform input.csv output.csv"
+    echo "  1. Test with sample data: ./test.sh"
+    echo "  2. Replace testrail_export.csv with your data"
+    echo "  3. Run transformation: ./test.sh"
     echo ""
     echo "📖 See README.md for detailed usage instructions."
 else
